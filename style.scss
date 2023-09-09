@@ -1,0 +1,498 @@
+@import url("https://fonts.googleapis.com/css2?family=Iceland&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Satisfy&display=swap");
+* {
+      margin: 0;
+      padding: 0;
+      li {
+            list-style: none;
+      }
+}
+h2 {
+      font-family: "Pacifico", cursive;
+      font-size: 30px;
+}
+div {
+      font-family: "Indie Flower", cursive;
+}
+$red: #e1332d;
+$white: #fff;
+
+@mixin button {
+      background: lighten($red, 3%);
+      border: 1px solid darken($red, 4%);
+      box-shadow: 0px 2px 0 darken($red, 5%), 2px 4px 6px darken($red, 2%);
+      transition: all 150ms linear;
+
+      &:hover {
+            background: darken($red, 1.5%);
+            border: 1px solid rgba(#000, 0.05);
+            box-shadow: 1px 1px 2px rgba(#fff, 0.2);
+            color: lighten($red, 18%);
+            text-decoration: none;
+            text-shadow: -1px -1px 0 darken($red, 9.5%);
+            transition: all 250ms linear;
+      }
+}
+@mixin toggle--menu {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding-top: 10px;
+      transition: 0.5s;
+      right: -420px;
+      .back--btn {
+            cursor: pointer;
+            margin-top: 20px;
+
+            font-size: 50px;
+            transition: 0.5s;
+            &:hover {
+                  color: lighten($red, 3%);
+                  text-decoration: none;
+                  text-shadow: -1px -1px 0 darken($red, 9.5%);
+                  transition: all 250ms linear;
+            }
+      }
+}
+body {
+      height: 100vh;
+}
+.head {
+      min-height: 20px;
+
+      display: grid;
+      position: relative;
+      padding-top: 50px;
+
+      grid-template-columns: 170px 80px 170px;
+      grid-template-areas: "time moves pause";
+
+      font-size: 27px;
+      font-weight: 700;
+      text-align: center;
+      justify-content: center;
+      div {
+            background: lighten($red, 30%);
+            padding: 6px;
+      }
+      div:nth-child(1) {
+            grid-area: time;
+            border-top-left-radius: 20px;
+      }
+      div:nth-child(2) {
+            grid-area: moves;
+            background: lighten($red, 30%);
+            padding-top: 0;
+
+            #pause {
+                  cursor: pointer;
+                  background: lighten($red, 3%);
+                  border-bottom-left-radius: 20px;
+                  border-bottom-right-radius: 20px;
+                  @include button;
+
+                  .fa-pause {
+                        display: inline;
+                  }
+                  .fa-play {
+                        display: none;
+                  }
+                  &.active {
+                        .fa-pause {
+                              display: none;
+                        }
+                        .fa-play {
+                              display: inline;
+                        }
+                  }
+            }
+      }
+      div:nth-child(3) {
+            grid-area: pause;
+            border-top-right-radius: 20px;
+      }
+}
+.container {
+      display: grid;
+      position: relative;
+      width: 420px;
+      height: 420px;
+      margin: auto;
+      background: lighten($red, 30%);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+
+      .tags {
+            position: absolute;
+            display: grid;
+
+            div {
+                  position: absolute;
+                  grid-area: plates;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  top: 0px;
+                  left: 0px;
+                  border-radius: 4px;
+                  font-weight: 900;
+                  font-size: 40px;
+                  letter-spacing: 1px;
+                  color: rgb(48, 47, 47);
+                  cursor: pointer;
+                  @include button;
+                  font-family: "Iceland", cursive;
+                  &:last-child {
+                        opacity: 0;
+                        cursor: default;
+                  }
+            }
+            &.size3x3 {
+                  grid-template-areas: "plates plates plates";
+                  div {
+                        width: 91px;
+                        height: 91px;
+                        margin: 25px;
+                  }
+            }
+            &.size4x4 {
+                  grid-template-areas: "plates plates plates plates";
+                  div {
+                        width: 90px;
+                        height: 90px;
+                        margin: 5px;
+                        overflow: hidden;
+
+                        img{
+                              position: absolute;
+                              z-index: 2;
+                              width: 100%;
+                              height: 100%;
+                        }
+                  }
+            }
+            &.size5x5 {
+                  grid-template-areas: "plates plates plates plates plates";
+                  div {
+                        width: 60px;
+                        height: 60px;
+                        margin: 10px;
+                  }
+            }
+            &.size6x6 {
+                  grid-template-areas: "plates plates plates plates plates plates";
+                  div {
+                        width: 50px;
+                        height: 50px;
+                        margin: 8px;
+                  }
+            }
+            &.size7x7 {
+                  grid-template-areas: "plates plates plates plates plates plates plates";
+                  div {
+                        width: 49px;
+                        height: 49px;
+                        margin: 8px;
+                  }
+            }
+            &.size8x8 {
+                  grid-template-areas: "plates plates plates plates plates plates plates plates";
+                  div {
+                        width: 40px;
+                        height: 40px;
+                        margin: 5px;
+                  }
+            }
+      }
+      .error {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            bottom: 0;
+            height: 50px;
+            width: 100%;
+            padding-top: 20px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            font-size: 25px;
+            overflow: hidden;
+            transition: 0.5s;
+            z-index: -10;
+            background: linear-gradient(180deg, lighten($red, 30%) 50%, lighten($red, 10%));
+      }
+
+      .overlay {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            justify-content: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            background: linear-gradient(180deg, lighten($red, 30%) 7%, rgba(0, 0, 0, 0.8));
+            opacity: 0;
+            transition: 0.5s;
+            z-index: -10;
+            overflow: hidden;
+
+            ul {
+                  display: flex;
+                  position: absolute;
+                  flex-direction: column;
+                  align-items: center;
+                  left: 0px;
+                  width: 100%;
+                  transition: 0.5s;
+
+                  li {
+                        width: 70%;
+                        height: 30px;
+                        margin-bottom: 25px;
+
+                        div {
+                              cursor: pointer;
+                              font-family: "Pacifico", cursive;
+                              font-size: 35px;
+                              font-weight: 700;
+                              transition: 0.5s;
+                              &:hover {
+                                    color: lighten($red, 3%);
+                                    text-decoration: none;
+                                    text-shadow: -1px -1px 0 darken($red, 9.5%);
+                                    transition: all 250ms linear;
+                              }
+                        }
+                  }
+            }
+            .load {
+                  @include toggle--menu;
+                  .game--info {
+                        display: flex;
+                        overflow: hidden;
+                        .load--container {
+                              position: absolute;
+
+                              display: block;
+                              font-size: 20px;
+                              width: 220px;
+                              right: -220px;
+                              transition: 0.3s;
+                        }
+                        .load--container.focused--load {
+                              right: 100px;
+                        }
+                  }
+                  .arrows {
+                        padding-top: 120px;
+                        font-size: 40px;
+                        i {
+                              cursor: pointer;
+                              margin-top: 20px;
+                              margin: 0 10px;
+                              font-size: 50px;
+                              transition: 0.5s;
+                              &:hover {
+                                    color: lighten($red, 3%);
+                                    text-decoration: none;
+                                    text-shadow: -1px -1px 0 darken($red, 9.5%);
+                                    transition: all 250ms linear;
+                              }
+                        }
+                  }
+                  .load--btn {
+                        cursor: pointer;
+                        font-family: "Pacifico", cursive;
+                        width: 100px;
+                        font-size: 35px;
+                        font-weight: 700;
+                        transition: 0.5s;
+                        &:hover {
+                              color: lighten($red, 3%);
+                              text-decoration: none;
+                              text-shadow: -1px -1px 0 darken($red, 9.5%);
+                              transition: all 250ms linear;
+                        }
+                  }
+            }
+            .scores {
+                  @include toggle--menu;
+
+                  padding-top: 0px;
+                  .scores--container {
+                        
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        section {
+
+                              display: flex;
+                              flex-direction: row;
+                              align-items: center;
+                              justify-content: center;
+                              
+                              width: 100%;
+                              div{
+                                    width: 20%;
+                                    font-size: 20px;
+                              }
+
+                        }
+                  }
+            }
+
+            .rules {
+                  @include toggle--menu;
+                  padding: 0 20%;
+
+                  width: 60%;
+                  font-size: 20px;
+            }
+            .settings {
+                  @include toggle--menu;
+
+                  .sizes {
+                        display: flex;
+                        position: relative;
+                        left: 90px;
+                        transition: 0.5s;
+                        div {
+                              cursor: default;
+                              font-size: 20px;
+                              padding: 0 10px;
+                              font-size: 28px;
+                              transition: 0.5s;
+                              opacity: 0;
+                        }
+
+                        .focused {
+                              display: inline;
+                              opacity: 1;
+                        }
+                        .whith--focused {
+                              cursor: pointer;
+                              display: inline;
+                              opacity: 0.5;
+                        }
+                  }
+
+                  #save--settings {
+                        width: 250px;
+                        cursor: pointer;
+                        font-size: 35px;
+                        transition: 0.5s;
+                        font-family: "Pacifico", cursive;
+                        &:hover {
+                              color: lighten($red, 3%);
+                              text-decoration: none;
+                              text-shadow: -1px -1px 0 darken($red, 9.5%);
+                              transition: all 250ms linear;
+                        }
+                  }
+            }
+            &.load--active {
+                  ul {
+                        left: -420px;
+                  }
+                  .load {
+                        right: 0px;
+                  }
+            }
+            &.scores--active {
+                  ul {
+                        left: -420px;
+                  }
+                  .scores {
+                        right: 0px;
+                  }
+            }
+            &.rules--active {
+                  ul {
+                        left: -420px;
+                  }
+                  .rules {
+                        right: 0px;
+                  }
+            }
+            &.settings--active {
+                  ul {
+                        left: -420px;
+                  }
+                  .settings {
+                        right: 0px;
+                  }
+            }
+
+            &.active {
+                  opacity: 1;
+                  z-index: 10;
+
+                  #volume {
+                        bottom: 0;
+                        right: 0;
+                  }
+                  #auto-play {
+                        bottom: 0;
+                        left: 0;
+                  }
+            }
+
+            #volume {
+                  cursor: pointer;
+                  position: absolute;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  bottom: -70px;
+                  right: -70px;
+                  height: 70px;
+                  width: 70px;
+                  border-bottom-right-radius: 20px;
+                  border-top-left-radius: 20px;
+                  @include button;
+                  font-size: 24px;
+                  font-weight: 600;
+                  transition: 0.5s;
+                  .fa-volume-up {
+                        display: inline;
+                  }
+                  .fa-volume-mute {
+                        display: none;
+                  }
+
+                  &.active {
+                        .fa-volume-up {
+                              display: none;
+                        }
+                        .fa-volume-mute {
+                              display: inline;
+                        }
+                  }
+            }
+            #auto-play {
+                  cursor: pointer;
+                  position: absolute;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  bottom: -70px;
+                  left: -70px;
+                  height: 70px;
+                  width: 70px;
+                  border-top-right-radius: 20px;
+                  border-bottom-left-radius: 20px;
+                  @include button;
+                  font-size: 24px;
+                  font-weight: 600;
+                  transition: 0.5s;
+            }
+      }
+}
